@@ -1,4 +1,6 @@
 import { phone } from "phone";
+import { isIP } from "is-ip";
+
 import notifyByTelegram from "../services/notifyByTelegram.js";
 
 const checkNumber = async (number) => {
@@ -16,4 +18,12 @@ const checkNumber = async (number) => {
   }
 };
 
-export { checkNumber };
+const checkIp = async (ip) => {
+  try {
+    return isIP(ip);
+  } catch (error) {
+    await notifyByTelegram(error.stack);
+    return false;
+  }
+};
+export { checkNumber, checkIp };
